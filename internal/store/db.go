@@ -2,7 +2,7 @@ package store
 
 import (
 	"github.com/sarthak0714/fampay-assignment/internal/models"
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -19,7 +19,7 @@ type postgresDB struct {
 }
 
 func NewPostgresStore(connectionString string) (*postgresDB, error) {
-	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open(connectionString), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
