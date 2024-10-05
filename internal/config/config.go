@@ -31,6 +31,6 @@ func Load() *Config {
 		DbPath:         getEnv("DB_PATH", "test.db"),
 		YouTubeAPIKeys: strings.Split(os.Getenv("YOUTUBE_API_KEYS"), ","),
 		SearchQuery:    getEnv("SEARCH_QUERY", "marvel"),
-		FetchInterval:  30 * time.Second,
+		FetchInterval:  2 * time.Hour,
 	}
 }
