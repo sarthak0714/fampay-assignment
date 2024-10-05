@@ -2,6 +2,8 @@
 
 An API to fetch latest videos sorted in reverse chronological order of their publishing date-time from YouTube for a given tag/search query in a paginated response.
 
+## Depoyed on railway.app [Live Link](https://fampay-assignment-production.up.railway.app/) 
+
 ## Tech Stack
 - Echo (Golang 1.22)
 - SQLite
