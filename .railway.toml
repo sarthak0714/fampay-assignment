@@ -1,0 +1,11 @@
+[build]
+builder = "go"
+buildCommand = "go build -o main cmd/server/main.go"
+
+[deploy]
+startCommand = "./main"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+
+[env]
+GO_ENV = "production"
