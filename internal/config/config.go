@@ -15,6 +15,7 @@ type Config struct {
 	FetchInterval  time.Duration
 }
 
+// Returns the env value if found else uses a default value
 func getEnv(key, def string) string {
 	val := os.Getenv(key)
 	if val == "" {
@@ -23,6 +24,7 @@ func getEnv(key, def string) string {
 	return val
 }
 
+// returns a config struct
 func Load() *Config {
 	godotenv.Load()
 	return &Config{

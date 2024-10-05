@@ -20,6 +20,7 @@ const (
 	colorMagenta   = "\033[35m"
 )
 
+// Returns color ASNII for the specified http status code
 func statusColor(code int) string {
 	switch {
 	case code >= 100 && code < 200:
@@ -37,6 +38,7 @@ func statusColor(code int) string {
 	}
 }
 
+// Custom Middleware function for Pretty logging :).
 func CustomLogger() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
@@ -71,6 +73,7 @@ func CustomLogger() echo.MiddlewareFunc {
 	}
 }
 
+// Custom Middleware logger to indicate the perodic fetch afetr completion
 func FetchLogger() {
 	logMessage := fmt.Sprintf("%s[%s]%s %s%s%s%s%s",
 		colorLightCyan, time.Now().Format("2006-01-02 15:04:05"), colorReset,

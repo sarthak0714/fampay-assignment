@@ -14,6 +14,7 @@ import (
 	"google.golang.org/api/youtube/v3"
 )
 
+// interface for abstraction
 type YouTubeVideoService interface {
 	SearchVideos(string) ([]*models.Video, error)
 	FetchVideosWorker(string, time.Duration, store.Store)
@@ -26,6 +27,7 @@ type youTubeVideoService struct {
 	currKeyIdx        int
 }
 
+// Constructs a new YouTubeVideoService instance with the provided API keys and store.
 func NewService(keys []string, store store.Store) (*youTubeVideoService, error) {
 	if len(keys) == 0 {
 		return nil, fmt.Errorf("no API keys found")
@@ -44,6 +46,7 @@ func NewService(keys []string, store store.Store) (*youTubeVideoService, error) 
 }
 
 /*
+Searches for videos on YouTube based on the provided query string and returns a list of videos.
 refrence https://developers.google.com/youtube/v3/docs/search/list#go
 */
 
@@ -81,9 +84,7 @@ func (s *youTubeVideoService) SearchVideos(q string) ([]*models.Video, error) {
 	return videos, nil
 }
 
-/*
-Background Worker to perodically fetch the videos
-*/
+// Background Worker to periodically fetches videos based on the search query and saves them to the store.
 func (s *youTubeVideoService) FetchVideosWorker(query string, interval time.Duration, store store.Store) {
 	ticker := time.NewTicker(interval)
 	defer ticker.Stop()
@@ -100,9 +101,9 @@ func (s *youTubeVideoService) FetchVideosWorker(query string, interval time.Dura
 		}
 		utils.FetchLogger()
 	}
-
 }
 
+// changes the api key to next in the list
 func (s *youTubeVideoService) nextApiIdx() {
 	s.currKeyIdx = (s.currKeyIdx + 1) % len(s.apiKeys)
 	s.youtubeApiService.BasePath = fmt.Sprintf("https://www.googleapis.com/youtube/v3?key=%s", s.apiKeys[s.currKeyIdx])

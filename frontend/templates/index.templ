@@ -1,0 +1,71 @@
+package templates
+
+import (
+	"github.com/sarthak0714/fampay-assignment/internal/models"
+	"strconv"
+)
+
+templ Landing() {
+	@Base() {
+		<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+			<h1 class="text-4xl font-bold mb-8 text-center">Fampay Assigment</h1>
+			<h2 class="text-xl font-bold mb-8 text-center">API params<code>/api/videos?page=1&size=9</code></h2>
+			<div class="space-y-4">
+				<a href="/video" class="block w-64 text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+					View Videos
+				</a>
+				<a href="/api/video" class="block w-64 text-center bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+					View Raw API
+				</a>
+			</div>
+		</div>
+	}
+}
+
+templ VideoPage(videos []models.Video, currentPage int) {
+	@Base() {
+		<h1 class="text-3xl font-bold mb-6 text-center">Videos</h1>
+		<div
+			id="video-list"
+			class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+		>
+			@VideoList(videos, currentPage)
+		</div>
+		<div id="pagination" class="mt-8 flex justify-center items-center space-x-4">
+			<button
+				id="prev-page"
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+				hx-get={ "/video?page=" + strconv.Itoa(currentPage-1) + "&size=9" }
+				hx-target="#video-list"
+				hx-swap="innerHTML"
+				hx-trigger="click"
+			>
+				&lt;
+			</button>
+			<div id="current-page" class="text-xl font-semibold">{ strconv.Itoa(currentPage) }</div>
+			<button
+				id="next-page"
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+				hx-get={ "/video?page=" + strconv.Itoa(currentPage+1) + "&size=9" }
+				hx-target="#video-list"
+				hx-swap="innerHTML"
+				hx-trigger="click"
+			>
+				&gt;
+			</button>
+		</div>
+	}
+}
+
+templ VideoList(videos []models.Video, currentPage int) {
+	for _, video := range videos {
+		<div class="bg-white rounded-lg shadow-md overflow-hidden">
+			<img src={ video.ThumbnailURL } alt={ video.Title } class="w-full h-48 object-cover"/>
+			<div class="p-4">
+				<h2 class="text-xl font-semibold mb-2">{ video.Title }</h2>
+				<p class="text-gray-600 mb-2">{ video.PublishedAt.Format("Jan 02, 2006 15:04 MST") }</p>
+				<p class="text-gray-700 truncate">{ video.Description }</p>
+			</div>
+		</div>
+	}
+}
