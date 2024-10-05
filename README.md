@@ -40,7 +40,13 @@ An API to fetch latest videos sorted in reverse chronological order of their pub
     - Query Parameters:
         - `page`: Page number (default: 1)
         - `size`: Number of videos per page (default: 9)
-    - Example: `http://localhost:8080/api/video?page=1&size=9`
+    - Example: `http://localhost:8080/api/video?page=1&size=9` 
+
+2. `GET /`
+    - Returns Home page.
+
+3. `GET /videos`
+    - Returns video list page.
 
 ## Frontend 
 
