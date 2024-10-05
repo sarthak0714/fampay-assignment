@@ -1,6 +1,6 @@
 [build]
 builder = "go"
-buildCommand = "go build -o main cmd/server/main.go"
+buildCommand = "apt-get update && apt-get install -y gcc && CGO_ENABLED=1 go build -o out cmd/server/main.go"
 
 [deploy]
 startCommand = "./main"
